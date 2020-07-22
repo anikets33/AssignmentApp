@@ -5,4 +5,4 @@ Room Persistence Library -- Database
 
 Retrofit -- Api
 
-Apk of the is also attached here
+Apk of the app is also attached here
