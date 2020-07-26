@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.assignment.R
 import com.example.android.assignment.adapter.HomeRecyclerAdapter
-import com.example.android.assignment.model.Image
 import com.example.android.assignment.services.ImageApi
 import com.example.android.assignment.services.ServiceBuilder
 import retrofit2.Call
@@ -44,48 +43,48 @@ class ViewImagesFragment : Fragment() {
 
         loadImages()
 
-    return view
-}
+        return view
+    }
 
-private fun loadImages() {
+    private fun loadImages() {
 
-    val imageService = ServiceBuilder.buildService(ImageApi::class.java)
+        val imageService = ServiceBuilder.buildService(ImageApi::class.java)
 
-    val requestCall = imageService.getImage()
+        val requestCall = imageService.getImage()
 
-    requestCall.enqueue(object :
-        retrofit2.Callback<List<com.example.android.assignment.model.Image>> {
-        override fun onFailure(
-            call: Call<List<com.example.android.assignment.model.Image>>?,
-            t: Throwable?
-        ) {
-            Toast.makeText(context, "Error occurred", Toast.LENGTH_LONG).show()
-        }
+        requestCall.enqueue(object :
+            retrofit2.Callback<List<com.example.android.assignment.model.Image>> {
+            override fun onFailure(
+                call: Call<List<com.example.android.assignment.model.Image>>?,
+                t: Throwable?
+            ) {
+                Toast.makeText(context, "Error occurred", Toast.LENGTH_LONG).show()
+            }
 
-        override fun onResponse(
-            call: Call<List<com.example.android.assignment.model.Image>>?,
-            response: Response<List<com.example.android.assignment.model.Image>>?
-        ) {
-            if (response != null) {
+            override fun onResponse(
+                call: Call<List<com.example.android.assignment.model.Image>>?,
+                response: Response<List<com.example.android.assignment.model.Image>>?
+            ) {
+                if (response != null) {
 
-                if (response.isSuccessful) {
+                    if (response.isSuccessful) {
 
-                    progressLayout.visibility = View.GONE
-                    val resList = response.body()
-                    recyclerAdapter = HomeRecyclerAdapter(activity as Context, resList)
-                    recyclerView.layoutManager = layoutManager
-                    recyclerView.adapter = recyclerAdapter
+                        progressLayout.visibility = View.GONE
+                        val resList = response.body()
+                        recyclerAdapter = HomeRecyclerAdapter(activity as Context, resList)
+                        recyclerView.layoutManager = layoutManager
+                        recyclerView.adapter = recyclerAdapter
+
+                    } else {
+                        Toast.makeText(context, "Failed to fetch images", Toast.LENGTH_LONG).show()
+                    }
 
                 } else {
-                    Toast.makeText(context, "Failed to fetch images", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
                 }
-
-            } else {
-                Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
             }
-        }
 
-    })
+        })
 
-}
+    }
 }

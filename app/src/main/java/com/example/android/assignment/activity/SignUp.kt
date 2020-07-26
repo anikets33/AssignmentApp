@@ -16,8 +16,6 @@ import com.google.android.material.snackbar.Snackbar
 
 class SignUp : AppCompatActivity() {
 
-    lateinit var sharedPreferences : SharedPreferences
-
     private lateinit var email: EditText
     private lateinit var name: EditText
     private lateinit var confirmPassword: EditText
@@ -30,8 +28,6 @@ class SignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-
-        sharedPreferences = getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE)
 
         email = findViewById(R.id.sign_up_email)
         password = findViewById(R.id.sign_up_password)
@@ -68,10 +64,6 @@ class SignUp : AppCompatActivity() {
             val result = async.get()
 
             if (result) {
-
-                val editor : SharedPreferences.Editor = sharedPreferences.edit()
-                editor.putString("email", email).apply()
-                editor.putString("password", password).apply()
 
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

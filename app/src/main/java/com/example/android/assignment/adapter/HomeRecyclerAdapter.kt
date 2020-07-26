@@ -33,8 +33,11 @@ class HomeRecyclerAdapter(val context: Context, private val itemList: List<Image
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val item = itemList[position]
 
-        holder.id.text = item.id.toString()
-        holder.title.text = item.title
+        val id = item.id.toString()
+        val title = item.title
+
+        holder.id.text = "ID  : $id"
+        holder.title.text = "TITLE  : $title"
         Picasso.get().load(item.thumbnailUrl).error(R.drawable.ic_launcher_foreground).into(holder.img)
 
     }

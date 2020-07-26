@@ -23,7 +23,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/drawer_gradient"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:layout_scrollFlags="scroll|enterAlways"/>
@@ -41,8 +41,10 @@
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white">
+                app:tabBackground="@drawable/tab_selector"
+                android:background="@color/colorAccent">
             </com.google.android.material.tabs.TabLayout>
+
             <androidx.viewpager2.widget.ViewPager2
                 android:layout_marginTop="?attr/actionBarSize"
                 android:id="@+id/viewPager"

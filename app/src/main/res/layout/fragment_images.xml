@@ -23,6 +23,8 @@
         android:paddingBottom="20dp"
         android:layout_gravity="center"
         android:background="@drawable/btn"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         android:text="@string/gallery" />
 
 

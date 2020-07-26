@@ -28,8 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
 
-    lateinit var sharedPreferences: SharedPreferences
-
     lateinit var drawerLayout: DrawerLayout
     lateinit var coordinatorLayout: CoordinatorLayout
     lateinit var toolbar: Toolbar
@@ -39,8 +37,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        sharedPreferences = getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE)
 
         drawerLayout = findViewById(R.id.drawer_layout)
         coordinatorLayout = findViewById(R.id.coordinator_layout)
@@ -68,7 +64,6 @@ class MainActivity : AppCompatActivity() {
                     dialogBuilder.setTitle("Confirmation")
                     dialogBuilder.setMessage("Are you sure you want to log out?")
                     dialogBuilder.setPositiveButton("Yes"){text, listener ->
-                        sharedPreferences.edit().clear().apply()
                         val intent = Intent(this, Opening::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
@@ -116,9 +111,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun setUpToolbar(){
+    private fun setUpToolbar(){
         setSupportActionBar(toolbar)
-        supportActionBar?.title = "All Restaurants"
+        supportActionBar?.title = "Home"
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

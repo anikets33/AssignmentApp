@@ -18,8 +18,6 @@ import com.google.android.material.snackbar.Snackbar
 
 class SignIn : AppCompatActivity() {
 
-    lateinit var sharedPreferences : SharedPreferences
-
     private lateinit var email: EditText
     private lateinit var password: EditText
     private lateinit var btn: Button
@@ -31,8 +29,6 @@ class SignIn : AppCompatActivity() {
         email = findViewById(R.id.sign_in_email)
         password = findViewById(R.id.sign_in_password)
         btn = findViewById(R.id.sign_in_btn)
-
-        sharedPreferences = getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE)
 
         btn.setOnClickListener {
 
@@ -58,10 +54,6 @@ class SignIn : AppCompatActivity() {
 
             val snack = Snackbar.make(view,"Login Successful", Snackbar.LENGTH_LONG)
             snack.show()
-
-            val editor : SharedPreferences.Editor = sharedPreferences.edit()
-            editor.putString("email", email).apply()
-            editor.putString("password", password).apply()
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/opening_background"
     tools:context=".activity.Opening">
 
     <Button
-        android:paddingStart="56dp"
-        android:paddingEnd="56dp"
-        android:background="@drawable/btn"
         android:id="@+id/sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn"
+        android:paddingStart="56dp"
+        android:paddingEnd="56dp"
         android:text="@string/sign_in"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -22,12 +25,14 @@
         app:layout_constraintVertical_bias="0.371" />
 
     <Button
-        android:paddingStart="56dp"
-        android:paddingEnd="56dp"
-        android:background="@drawable/btn"
         android:id="@+id/sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn"
+        android:paddingStart="56dp"
+        android:paddingEnd="56dp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         android:text="@string/sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
