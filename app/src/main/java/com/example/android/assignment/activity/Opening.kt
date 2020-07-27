@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.android.assignment.R
+import com.example.android.assignment.activity.signIn.SignIn
+import com.example.android.assignment.activity.signUp.SignUp
 
 class Opening : AppCompatActivity() {
 

@@ -14,7 +14,7 @@ interface LoginDao {
     @Delete
     fun deleteLogin(loginEntity: LoginEntity)
 
-    @Query("SELECT * FROM login WHERE email = :email")
-    fun getLoginDetails(email: String): LoginEntity
+    @Query("SELECT * FROM login WHERE email = :email and password = :password")
+    fun getLoginDetails(email: String, password: String): LoginEntity
 
 }

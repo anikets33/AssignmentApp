@@ -1,21 +1,18 @@
-package com.example.android.assignment.fragment
+package com.example.android.assignment.fragment.image
 
-import android.R.attr
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.database.Cursor
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.android.assignment.R
-import kotlinx.android.synthetic.*
 
 
 class ImagesFragment : Fragment() {
@@ -23,6 +20,8 @@ class ImagesFragment : Fragment() {
     private val RESULT_LOAD_IMAGE = 1
     private lateinit var galleryBtn: Button
     private lateinit var image: ImageView
+
+    private lateinit var model : ImageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +36,14 @@ class ImagesFragment : Fragment() {
         image.visibility = View.GONE
         galleryBtn.visibility = View.VISIBLE
 
+        model = ViewModelProviders.of(this).get(ImageViewModel::class.java)
+
+        model.isChanged.observe(viewLifecycleOwner, Observer { hasChanged ->
+            if (hasChanged){
+                displayImage(model.data)
+            }
+        })
+
         galleryBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -49,12 +56,16 @@ class ImagesFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == RESULT_LOAD_IMAGE){
-
-            galleryBtn.visibility = View.GONE
-
-            image.visibility = View.VISIBLE
-            image.setImageURI(data?.data) // handle chosen image
+            model.setData(data)
+            displayImage(model.data)
         }
+    }
+
+    fun displayImage(data: LiveData<Intent?>){
+        galleryBtn.visibility = View.GONE
+
+        image.visibility = View.VISIBLE
+        image.setImageURI(model.data.value?.data) // handle chosen image
     }
 
 }

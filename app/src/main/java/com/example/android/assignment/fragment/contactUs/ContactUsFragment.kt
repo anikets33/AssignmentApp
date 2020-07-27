@@ -1,4 +1,4 @@
-package com.example.android.assignment.fragment
+package com.example.android.assignment.fragment.contactUs
 
 import android.content.Intent
 import android.net.Uri

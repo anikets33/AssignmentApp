@@ -1,8 +1,7 @@
-package com.example.android.assignment.activity
+package com.example.android.assignment.activity.signUp
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,7 +9,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import com.example.android.assignment.R
+import com.example.android.assignment.activity.MainActivity
+import com.example.android.assignment.activity.signIn.SignIn
 import com.example.android.assignment.database.LoginEntity
 import com.google.android.material.snackbar.Snackbar
 
@@ -25,6 +27,8 @@ class SignUp : AppCompatActivity() {
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     private val namePattern = "^[a-zA-Z]*"
 
+    private lateinit var model: SignUpViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -35,17 +39,17 @@ class SignUp : AppCompatActivity() {
         name = findViewById(R.id.sign_up_name)
         btn = findViewById(R.id.sign_up_btn)
 
+        model = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
+
         btn.setOnClickListener {
 
             // Hide the keyboard.
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(it.windowToken, 0)
 
-            if (checkForEmptyField(it)){
+            if (checkForEmptyField()){
                 if (validate(it)){
-
                     insertLogin(email.text.toString(), password.text.toString())
-
                 }
             }
         }
@@ -59,23 +63,20 @@ class SignUp : AppCompatActivity() {
             password
         )
 
-        if (!SignIn.DBAsyncTask(this, loginEntity, 1).execute().get()) {
-            val async = SignIn.DBAsyncTask(this, loginEntity, 2).execute()
-            val result = async.get()
-
-            if (result) {
-
-                val intent = Intent(this, MainActivity::class.java)
+        val res = model.checkDatabase(this, loginEntity).value
+            if(!res!!) {
+                val result = model.insertDatabase(this, loginEntity).value
+                if(result!!){
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this, "Some error occurred!!!", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this, "Account already exist", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, SignIn::class.java)
                 startActivity(intent)
-
-            } else {
-                Toast.makeText(this, "Some error occurred!!!", Toast.LENGTH_SHORT).show()
             }
-        }else{
-            Toast.makeText(this, "Account already exist", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, SignIn::class.java)
-            startActivity(intent)
-        }
 
     }
 
@@ -100,7 +101,7 @@ class SignUp : AppCompatActivity() {
         return true
     }
 
-    private fun checkForEmptyField(view: View) : Boolean{
+    private fun checkForEmptyField(): Boolean{
 
         when{
             email.text.toString().isEmpty() -> {

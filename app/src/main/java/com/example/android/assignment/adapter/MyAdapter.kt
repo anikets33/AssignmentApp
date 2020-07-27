@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.android.assignment.fragment.ContactUsFragment
-import com.example.android.assignment.fragment.ImagesFragment
-import com.example.android.assignment.fragment.ViewImagesFragment
+import com.example.android.assignment.fragment.contactUs.ContactUsFragment
+import com.example.android.assignment.fragment.image.ImagesFragment
+import com.example.android.assignment.fragment.viewImage.ViewImagesFragment
 
 class MyAdapter(
     context: Context,
